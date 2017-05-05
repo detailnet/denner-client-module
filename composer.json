@@ -1,6 +1,6 @@
 {
     "name": "detailnet/denner-client-module",
-    "description": "Zend Framework Module for Denner-client",
+    "description": "Zend Framework Module for denner-client",
     "type": "library",
     "keywords": [
         "denner",
