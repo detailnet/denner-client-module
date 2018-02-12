@@ -21,7 +21,7 @@ Install the module through [Composer](http://getcomposer.org/) using the followi
      ```json
      {
          "require": {
-             "detailnet/denner-client-module": "1.x-dev"
+             "detailnet/denner-client-module": "^2.0"
          }
      }
      ```
