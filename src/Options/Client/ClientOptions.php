@@ -2,7 +2,7 @@
 
 namespace Denner\Client\Options\Client;
 
-use Detail\Core\Options\AbstractOptions;
+use Zend\Stdlib\AbstractOptions;
 
 class ClientOptions extends AbstractOptions
 {
@@ -24,7 +24,7 @@ class ClientOptions extends AbstractOptions
     /**
      * @var array
      */
-    protected $defaults = array();
+    protected $defaults = [];
 
     /**
      * @return string

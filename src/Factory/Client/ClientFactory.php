@@ -20,7 +20,7 @@ class ClientFactory implements
      *
      * @var array
      */
-    protected $lookupCache = array();
+    protected $lookupCache = [];
 
     /**
      * Determine if we can create a service with name.
@@ -63,7 +63,7 @@ class ClientFactory implements
 
         /** @var DennerClient $requestedName*/
 
-        $appliedClientOptions = array();
+        $appliedClientOptions = [];
 
         // Only pass along options which are actually set
         if ($clientOptions !== null) {

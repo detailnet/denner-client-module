@@ -2,7 +2,7 @@
 
 namespace Denner\Client\Options;
 
-use Detail\Core\Options\AbstractOptions;
+use Zend\Stdlib\AbstractOptions;
 
 class ModuleOptions extends AbstractOptions
 {
@@ -33,7 +33,7 @@ class ModuleOptions extends AbstractOptions
      */
     public function setClients(array $clients)
     {
-        $this->clients = array();
+        $this->clients = [];
 
         foreach ($clients as $name => $options) {
             $this->clients[$name] = new Client\ClientOptions($options);
