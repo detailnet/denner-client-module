@@ -2,8 +2,9 @@
 
 namespace Denner\Client\Factory\Options;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
+
+use Zend\ServiceManager\Factory\FactoryInterface;
 
 use Denner\Client\Exception\ConfigException;
 use Denner\Client\Options\ModuleOptions;
@@ -12,12 +13,14 @@ class ModuleOptionsFactory implements
     FactoryInterface
 {
     /**
-     * {@inheritDoc}
+     * @param ContainerInterface $container
+     * @param string $requestedName
+     * @param array|null $options
      * @return ModuleOptions
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $config = $serviceLocator->get('Config');
+        $config = $container->get('Config');
 
         if (!isset($config['denner_client'])) {
             throw new ConfigException('Config for Denner\Client is not set');

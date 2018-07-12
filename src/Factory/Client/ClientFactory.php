@@ -4,8 +4,9 @@ namespace Denner\Client\Factory\Client;
 
 use ReflectionClass;
 
-use Zend\ServiceManager\AbstractFactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
+
+use Zend\ServiceManager\Factory\AbstractFactoryInterface;
 
 use Denner\Client\DennerClient;
 use Denner\Client\Exception;
@@ -16,21 +17,20 @@ class ClientFactory implements
     AbstractFactoryInterface
 {
     /**
-     * Cache of canCreateServiceWithName lookups.
+     * Cache of canCreate lookups.
      *
      * @var array
      */
-    protected $lookupCache = [];
+    private $lookupCache = [];
 
     /**
-     * Determine if we can create a service with name.
+     * Can the factory create an instance for the service?
      *
-     * @param ServiceLocatorInterface $services
-     * @param string $name
+     * @param ContainerInterface $container
      * @param string $requestedName
-     * @return boolean
+     * @return bool
      */
-    public function canCreateServiceWithName(ServiceLocatorInterface $services, $name, $requestedName)
+    public function canCreate(ContainerInterface $container, $requestedName)
     {
         if (array_key_exists($requestedName, $this->lookupCache)) {
             return $this->lookupCache[$requestedName];
@@ -44,16 +44,14 @@ class ClientFactory implements
     }
 
     /**
-     * Create service with name.
-     *
-     * @param ServiceLocatorInterface $services
-     * @param string $name
+     * @param ContainerInterface $container
      * @param string $requestedName
+     * @param array|null $options
      * @return DennerClient
      */
-    public function createServiceWithName(ServiceLocatorInterface $services, $name, $requestedName)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $clientOptions = $this->getClientOptions($services, $requestedName);
+        $clientOptions = $this->getClientOptions($container, $requestedName);
 
         if (!$this->clientExists($requestedName)) {
             throw new Exception\ConfigException(
@@ -61,15 +59,18 @@ class ClientFactory implements
             );
         }
 
-        /** @var DennerClient $requestedName*/
+        /** @var DennerClient $requestedName */
 
         $appliedClientOptions = [];
 
         // Only pass along options which are actually set
         if ($clientOptions !== null) {
-            $appliedClientOptions = array_filter($clientOptions->toArray(), function ($value) {
-                return $value !== null;
-            });
+            $appliedClientOptions = array_filter(
+                $clientOptions->toArray(),
+                function ($value) {
+                    return $value !== null;
+                }
+            );
         }
 
         $client = $requestedName::factory($appliedClientOptions);
@@ -81,7 +82,7 @@ class ClientFactory implements
      * @param string $clientClass
      * @return boolean
      */
-    protected function clientExists($clientClass)
+    private function clientExists($clientClass)
     {
         // Class name must start with "Denner\Client"
         if (strpos($clientClass, 'Denner\Client') !== 0) {
@@ -98,14 +99,14 @@ class ClientFactory implements
     }
 
     /**
-     * @param ServiceLocatorInterface $services
+     * @param ContainerInterface $container
      * @param string $clientName
      * @return ClientOptions
      */
-    protected function getClientOptions(ServiceLocatorInterface $services, $clientName)
+    private function getClientOptions(ContainerInterface $container, $clientName)
     {
         /** @var ModuleOptions $moduleOptions */
-        $moduleOptions = $services->get(ModuleOptions::CLASS);
+        $moduleOptions = $container->get(ModuleOptions::CLASS);
         $clientOptions = $moduleOptions->getClient($clientName);
 
         return $clientOptions;
