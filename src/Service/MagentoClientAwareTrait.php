@@ -7,22 +7,16 @@ use Denner\Client\MagentoClient as Client;
 trait MagentoClientAwareTrait
 {
     /**
-     * @var Client
+     * @var Client|null
      */
-    protected $magentoClient;
+    private $magentoClient;
 
-    /**
-     * @return Client
-     */
-    public function getMagentoClient()
+    public function getMagentoClient(): ?Client
     {
         return $this->magentoClient;
     }
 
-    /**
-     * @param Client $magentoClient
-     */
-    public function setMagentoClient(Client $magentoClient)
+    public function setMagentoClient(Client $magentoClient): void
     {
         $this->magentoClient = $magentoClient;
     }

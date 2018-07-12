@@ -9,13 +9,9 @@ class ModuleOptions extends AbstractOptions
     /**
      * @var Client\ClientOptions[]
      */
-    protected $clients;
+    protected $clients = [];
 
-    /**
-     * @param string $name
-     * @return Client\ClientOptions
-     */
-    public function getClient($name)
+    public function getClient(string $name): ?Client\ClientOptions
     {
         return isset($this->clients[$name]) ? $this->clients[$name] : null;
     }
@@ -23,7 +19,7 @@ class ModuleOptions extends AbstractOptions
     /**
      * @return Client\ClientOptions[]
      */
-    public function getClients()
+    public function getClients(): array
     {
         return $this->clients;
     }

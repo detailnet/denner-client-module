@@ -6,10 +6,10 @@ use ReflectionClass;
 
 use Interop\Container\ContainerInterface;
 
+use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Factory\AbstractFactoryInterface;
 
 use Denner\Client\DennerClient;
-use Denner\Client\Exception;
 use Denner\Client\Options\Client\ClientOptions;
 use Denner\Client\Options\ModuleOptions;
 
@@ -54,7 +54,7 @@ class ClientFactory implements
         $clientOptions = $this->getClientOptions($container, $requestedName);
 
         if (!$this->clientExists($requestedName)) {
-            throw new Exception\ConfigException(
+            throw new ServiceNotCreatedException(
                 sprintf('Client "%s" does not exist', $requestedName)
             );
         }
@@ -73,16 +73,17 @@ class ClientFactory implements
             );
         }
 
+        // The client expects "base_uri", but we work with "base_url" (to remain backwards compatibility)
+        if (!isset($appliedClientOptions['base_uri']) && isset($appliedClientOptions['base_url'])) {
+            $appliedClientOptions['base_uri'] = $appliedClientOptions['base_url'];
+        }
+
         $client = $requestedName::factory($appliedClientOptions);
 
         return $client;
     }
 
-    /**
-     * @param string $clientClass
-     * @return boolean
-     */
-    private function clientExists($clientClass)
+    private function clientExists(string $clientClass): bool
     {
         // Class name must start with "Denner\Client"
         if (strpos($clientClass, 'Denner\Client') !== 0) {
@@ -98,12 +99,7 @@ class ClientFactory implements
         return $reflectionClass->isSubclassOf(DennerClient::CLASS);
     }
 
-    /**
-     * @param ContainerInterface $container
-     * @param string $clientName
-     * @return ClientOptions
-     */
-    private function getClientOptions(ContainerInterface $container, $clientName)
+    private function getClientOptions(ContainerInterface $container, string $clientName): ClientOptions
     {
         /** @var ModuleOptions $moduleOptions */
         $moduleOptions = $container->get(ModuleOptions::CLASS);

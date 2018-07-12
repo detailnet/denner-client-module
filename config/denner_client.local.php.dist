@@ -4,7 +4,7 @@ return [
     'denner_client' => [
         'clients' => [
             'Denner\Client\AssetsClient' => [
-                'base_url' => 'http://denner-assets.public.web02.detailnet.me/api/',
+                'base_uri' => 'http://denner-assets.public.web02.detailnet.me/api/',
                 'app_id' => 'change-me',
                 'app_key' => 'change-me',
             ],

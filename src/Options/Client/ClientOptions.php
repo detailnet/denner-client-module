@@ -7,17 +7,22 @@ use Zend\Stdlib\AbstractOptions;
 class ClientOptions extends AbstractOptions
 {
     /**
-     * @var string
+     * @var string|null
+     */
+    protected $baseUri;
+
+    /**
+     * @var string|null
      */
     protected $baseUrl;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $appId;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $appKey;
 
@@ -26,66 +31,60 @@ class ClientOptions extends AbstractOptions
      */
     protected $defaults = [];
 
+    public function getBaseUri(): ?string
+    {
+        return $this->baseUri;
+    }
+
+    public function setBaseUri(string $baseUri): void
+    {
+        $this->baseUri = $baseUri;
+    }
+
     /**
      * @return string
+     * @deprecated Use {@see getBaseUri()} instead
      */
-    public function getBaseUrl()
+    public function getBaseUrl(): ?string
     {
         return $this->baseUrl;
     }
 
     /**
      * @param string $baseUrl
+     * @deprecated Use {@see setBaseUri()} instead
      */
-    public function setBaseUrl($baseUrl)
+    public function setBaseUrl(string $baseUrl): void
     {
         $this->baseUrl = $baseUrl;
     }
 
-    /**
-     * @return string
-     */
-    public function getAppId()
+    public function getAppId(): ?string
     {
         return $this->appId;
     }
 
-    /**
-     * @param string $appId
-     */
-    public function setAppId($appId)
+    public function setAppId(?string $appId): void
     {
         $this->appId = $appId;
     }
 
-    /**
-     * @return string
-     */
-    public function getAppKey()
+    public function getAppKey(): ?string
     {
         return $this->appKey;
     }
 
-    /**
-     * @param string $appKey
-     */
-    public function setAppKey($appKey)
+    public function setAppKey(?string $appKey): void
     {
         $this->appKey = $appKey;
     }
 
-    /**
-     * @return array
-     */
-    public function getDefaults()
+    public function getDefaults(): array
     {
         return $this->defaults;
     }
 
-    /**
-     * @param array $defaults
-     */
-    public function setDefaults(array $defaults)
+    public function setDefaults(array $defaults): void
     {
         $this->defaults = $defaults;
     }

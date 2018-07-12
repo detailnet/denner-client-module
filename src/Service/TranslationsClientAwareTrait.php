@@ -7,22 +7,16 @@ use Denner\Client\TranslationsClient as Client;
 trait TranslationsClientAwareTrait
 {
     /**
-     * @var Client
+     * @var Client|null
      */
-    protected $translationsClient;
+    private $translationsClient;
 
-    /**
-     * @return Client
-     */
-    public function getTranslationsClient()
+    public function getTranslationsClient(): ?Client
     {
         return $this->translationsClient;
     }
 
-    /**
-     * @param Client $translationsClient
-     */
-    public function setTranslationsClient(Client $translationsClient)
+    public function setTranslationsClient(Client $translationsClient): void
     {
         $this->translationsClient = $translationsClient;
     }

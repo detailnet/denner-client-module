@@ -4,9 +4,9 @@ namespace Denner\Client\Factory\Options;
 
 use Interop\Container\ContainerInterface;
 
+use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-use Denner\Client\Exception\ConfigException;
 use Denner\Client\Options\ModuleOptions;
 
 class ModuleOptionsFactory implements
@@ -23,7 +23,7 @@ class ModuleOptionsFactory implements
         $config = $container->get('Config');
 
         if (!isset($config['denner_client'])) {
-            throw new ConfigException('Config for Denner\Client is not set');
+            throw new ServiceNotCreatedException('Config for Denner\Client is not set');
         }
 
         return new ModuleOptions($config['denner_client']);

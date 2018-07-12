@@ -7,22 +7,16 @@ use Denner\Client\ArticlesClient as Client;
 trait ArticlesClientAwareTrait
 {
     /**
-     * @var Client
+     * @var Client|null
      */
-    protected $articlesClient;
+    private $articlesClient;
 
-    /**
-     * @return Client
-     */
-    public function getArticlesClient()
+    public function getArticlesClient(): ?Client
     {
         return $this->articlesClient;
     }
 
-    /**
-     * @param Client $articlesClient
-     */
-    public function setArticlesClient(Client $articlesClient)
+    public function setArticlesClient(Client $articlesClient): void
     {
         $this->articlesClient = $articlesClient;
     }
