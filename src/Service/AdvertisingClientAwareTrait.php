@@ -7,22 +7,16 @@ use Denner\Client\AdvertisingClient as Client;
 trait AdvertisingClientAwareTrait
 {
     /**
-     * @var Client
+     * @var Client|null
      */
-    protected $advertisingClient;
+    private $advertisingClient;
 
-    /**
-     * @return Client
-     */
-    public function getAdvertisingClient()
+    public function getAdvertisingClient(): ?Client
     {
         return $this->advertisingClient;
     }
 
-    /**
-     * @param Client $advertisingClient
-     */
-    public function setAdvertisingClient(Client $advertisingClient)
+    public function setAdvertisingClient(Client $advertisingClient): void
     {
         $this->advertisingClient = $advertisingClient;
     }

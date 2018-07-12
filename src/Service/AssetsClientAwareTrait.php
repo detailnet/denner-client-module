@@ -7,22 +7,16 @@ use Denner\Client\AssetsClient as Client;
 trait AssetsClientAwareTrait
 {
     /**
-     * @var Client
+     * @var Client|null
      */
-    protected $assetsClient;
+    private $assetsClient;
 
-    /**
-     * @return Client
-     */
-    public function getAssetsClient()
+    public function getAssetsClient(): ?Client
     {
         return $this->assetsClient;
     }
 
-    /**
-     * @param Client $assetsClient
-     */
-    public function setAssetsClient(Client $assetsClient)
+    public function setAssetsClient(Client $assetsClient): void
     {
         $this->assetsClient = $assetsClient;
     }

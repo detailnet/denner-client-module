@@ -7,22 +7,16 @@ use Denner\Client\AppraisalClient as Client;
 trait AppraisalClientAwareTrait
 {
     /**
-     * @var Client
+     * @var Client|null
      */
-    protected $appraisalClient;
+    private $appraisalClient;
 
-    /**
-     * @return Client
-     */
-    public function getAppraisalClient()
+    public function getAppraisalClient(): ?Client
     {
         return $this->appraisalClient;
     }
 
-    /**
-     * @param Client $appraisalClient
-     */
-    public function setAppraisalClient(Client $appraisalClient)
+    public function setAppraisalClient(Client $appraisalClient): void
     {
         $this->appraisalClient = $appraisalClient;
     }

@@ -21,7 +21,7 @@ Install the module through [Composer](http://getcomposer.org/) using the followi
      ```json
      {
          "require": {
-             "detailnet/denner-client-module": "^2.0"
+             "detailnet/denner-client-module": "^3.0"
          }
      }
      ```
@@ -40,6 +40,3 @@ Install the module through [Composer](http://getcomposer.org/) using the followi
 
   7. Copy `vendor/detailnet/denner-client-module/config/denner_client.local.php.dist` into your application's
      `config/autoload` directory, rename it to `denner_client.local.php` and make the appropriate changes.
-
-## Usage
-tbd

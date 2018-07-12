@@ -1,13 +1,13 @@
 <?php
 
-return array(
-    'denner_client' => array(
-        'clients' => array(
-            'Denner\Client\AssetsClient' => array(
-                'base_url' => 'http://denner-assets.public.web01.detailnet.me/api/',
+return [
+    'denner_client' => [
+        'clients' => [
+            'Denner\Client\AssetsClient' => [
+                'base_uri' => 'http://denner-assets.public.web02.detailnet.me/api/',
                 'app_id' => 'change-me',
                 'app_key' => 'change-me',
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];
