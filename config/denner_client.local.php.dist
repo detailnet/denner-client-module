@@ -7,6 +7,7 @@ return [
                 'base_uri' => 'http://denner-assets.public.web02.detailnet.me/api/',
                 'app_id' => 'change-me',
                 'app_key' => 'change-me',
+                'http_options' => [],
             ],
         ],
     ],
