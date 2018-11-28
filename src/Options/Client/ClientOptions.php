@@ -14,11 +14,6 @@ class ClientOptions extends AbstractOptions
     /**
      * @var string|null
      */
-    protected $baseUrl;
-
-    /**
-     * @var string|null
-     */
     protected $appId;
 
     /**
@@ -29,7 +24,7 @@ class ClientOptions extends AbstractOptions
     /**
      * @var array
      */
-    protected $defaults = [];
+    protected $httpOptions = [];
 
     public function getBaseUri(): ?string
     {
@@ -47,7 +42,7 @@ class ClientOptions extends AbstractOptions
      */
     public function getBaseUrl(): ?string
     {
-        return $this->baseUrl;
+        return $this->getBaseUri();
     }
 
     /**
@@ -56,7 +51,7 @@ class ClientOptions extends AbstractOptions
      */
     public function setBaseUrl(string $baseUrl): void
     {
-        $this->baseUrl = $baseUrl;
+        $this->setBaseUri($baseUrl);
     }
 
     public function getAppId(): ?string
@@ -79,13 +74,31 @@ class ClientOptions extends AbstractOptions
         $this->appKey = $appKey;
     }
 
-    public function getDefaults(): array
+    public function getHttpOptions(): array
     {
-        return $this->defaults;
+        return $this->httpOptions;
     }
 
-    public function setDefaults(array $defaults): void
+    public function setHttpOptions(array $options): void
     {
-        $this->defaults = $defaults;
+        $this->httpOptions = $options;
+    }
+
+    /**
+     * @return array
+     * @deprecated Use {@see getHttpOptions()} instead
+     */
+    public function getDefaults(): array
+    {
+        return $this->getHttpOptions();
+    }
+
+    /**
+     * @param array $options
+     * @deprecated Use {@see setHttpOptions()} instead
+     */
+    public function setDefaults(array $options): void
+    {
+        $this->setHttpOptions($options);
     }
 }

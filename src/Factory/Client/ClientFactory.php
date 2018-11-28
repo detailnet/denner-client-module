@@ -6,7 +6,7 @@ use ReflectionClass;
 
 use Interop\Container\ContainerInterface;
 
-use Zend\ServiceManager\Exception\ServiceNotCreatedException;
+use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\AbstractFactoryInterface;
 
 use Denner\Client\DennerClient;
@@ -54,33 +54,29 @@ class ClientFactory implements
         $clientOptions = $this->getClientOptions($container, $requestedName);
 
         if (!$this->clientExists($requestedName)) {
-            throw new ServiceNotCreatedException(
+            throw new ServiceNotFoundException(
                 sprintf('Client "%s" does not exist', $requestedName)
             );
         }
 
         /** @var DennerClient $requestedName */
 
-        $appliedClientOptions = [];
-
-        // Only pass along options which are actually set
-        if ($clientOptions !== null) {
-            $appliedClientOptions = array_filter(
-                $clientOptions->toArray(),
+        $options = array_merge(
+            $clientOptions->getHttpOptions(),
+            // Only pass along options which are actually set
+            array_filter(
+                [
+                    'base_uri' => $clientOptions->getBaseUri(),
+                    DennerClient::OPTION_APP_ID => $clientOptions->getAppId(),
+                    DennerClient::OPTION_APP_KEY => $clientOptions->getAppKey(),
+                ],
                 function ($value) {
                     return $value !== null;
                 }
-            );
-        }
+            )
+        );
 
-        // The client expects "base_uri", but we work with "base_url" (to remain backwards compatibility)
-        if (!isset($appliedClientOptions['base_uri']) && isset($appliedClientOptions['base_url'])) {
-            $appliedClientOptions['base_uri'] = $appliedClientOptions['base_url'];
-        }
-
-        $client = $requestedName::factory($appliedClientOptions);
-
-        return $client;
+        return $requestedName::factory($options);
     }
 
     private function clientExists(string $clientClass): bool
