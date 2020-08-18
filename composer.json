@@ -32,7 +32,7 @@
         "zendframework/zend-mvc": "^3.0.1",
         "zendframework/zend-servicemanager": "^3.1",
         "zendframework/zend-stdlib": "^3.0.1",
-        "detailnet/denner-client": "^3.2"
+        "detailnet/denner-client": "^3.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.0",
